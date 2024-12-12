@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List with Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #todo-container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .todo-item button {
+            margin-left: 10px;
+            background-color: #dc3545;
+        }
+        .todo-item button:hover {
+            background-color: #c82333;
+        }
+        .checked {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="todo-container">
+        <h2>My To-Do List</h2>
+        <input type="text" id="new-task" placeholder="Enter a new task">
+        <button onclick="addTask()">Add Task</button>
+
+        <ul id="todo-list">
+            <!-- Tasks will be added here -->
+        </ul>
+    </div>
+
+    <script>
+        // Function to add a new task to the list
+        function addTask() {
+            var taskInput = document.getElementById('new-task');
+            var taskText = taskInput.value.trim();
+            
+            if (taskText === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            var ul = document.getElementById('todo-list');
+            var li = document.createElement('li');
+            li.classList.add('todo-item');
+
+            // Create a checkbox for the task
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.onclick = toggleTaskCompletion;
+
+            // Create the task text element
+            var taskLabel = document.createElement('span');
+            taskLabel.textContent = taskText;
+
+            // Create a delete button
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = deleteTask;
+
+            // Append elements to the li
+            li.appendChild(checkbox);
+            li.appendChild(taskLabel);
+            li.appendChild(deleteButton);
+
+            // Append the li to the task list
+            ul.appendChild(li);
+
+            // Clear the input field
+            taskInput.value = '';
+        }
+
+        // Function to toggle task completion
+        function toggleTaskCompletion(event) {
+            var taskLabel = event.target.nextElementSibling;
+            taskLabel.classList.toggle('checked');
+        }
+
+        // Function to delete a task from the list
+        function deleteTask(event) {
+            var taskItem = event.target.parentElement;
+            taskItem.remove();
+        }
+    </script>
+
+</body>
+</html>
